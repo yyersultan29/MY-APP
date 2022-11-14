@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo } from 'react';
+import React from 'react';
 import { Dayname, month } from '../../utils/getMonth';
 import { DatePickerProps } from './DatePicker.props';
 
@@ -9,10 +9,13 @@ export const DatePicker: React.FC<DatePickerProps> = ({ value, onChange }) => {
   // CONSTANTS 
   const monthName = month[Number(date.getMonth())];
   const year = date.getFullYear();
+  const daysInMonth = new Date(date.getFullYear(), date.getMonth() + 1, 0).getDate();
+
+
   let firstDay = new Date(date.getFullYear(), date.getMonth(), 1).getDay();
   firstDay = firstDay === 0 ? 7 : firstDay;
-  const daysInMonth = new Date(date.getFullYear(), date.getMonth() + 1, 0).getDate();
   let prevMonthLastDay = new Date(date.getFullYear(), date.getMonth(), 0).getDate();
+
 
   const handlePrevMonthClick = (): void => {
     if (date.getMonth() - 1 < 0) {
@@ -28,15 +31,28 @@ export const DatePicker: React.FC<DatePickerProps> = ({ value, onChange }) => {
       onChange(new Date(year, date.getMonth() + 1, 1))
     }
   }
+  const handleNextYearClick = (): void => {
+    onChange(new Date(year + 1, 0, 1));
+  }
+  const handlePrevYearClick = (): void => {
+    onChange(new Date(year - 1, 0, 1));
+  }
+  const isEqualDates = (testDate: Date): boolean => {
+    const currDate = new Date();
+    return testDate.getDate() === currDate.getDate()
+      && testDate.getMonth() === currDate.getMonth()
+      && testDate.getFullYear() === currDate.getFullYear();
+  }
 
   React.useEffect(() => {
     setDate(value);
   }, [value]);
 
-  const renderDays = useMemo(() => {
+  const renderDays = React.useMemo(() => {
     let nextMonthStartDay = 1;
     const arr = [];
     let startDay = 1;
+
     for (let i = 0; i < 6; i++) {
       let sub = [];
       // week days from 1 to 7
@@ -49,7 +65,10 @@ export const DatePicker: React.FC<DatePickerProps> = ({ value, onChange }) => {
             sub.unshift(<td key={`${i}_${j}`} className='text_grey'>{prevMonthLastDay}</td>)
             prevMonthLastDay--;
           } else {
-            sub.push(<td key={`${i}_${j}`}>{startDay}</td>);
+            const testDate = new Date(date);
+            testDate.setDate(startDay);
+            const currDayClass = isEqualDates(testDate) ? "text_red_rounded" : "text_grey_rounded";
+            sub.push(<td key={`${i}_${j}`} className={currDayClass}>{startDay}</td>);
             startDay++;
           }
         } else {
@@ -63,7 +82,6 @@ export const DatePicker: React.FC<DatePickerProps> = ({ value, onChange }) => {
     return arr;
   }, [date]);
 
-  console.log(firstDay);
 
 
   return (
@@ -76,20 +94,18 @@ export const DatePicker: React.FC<DatePickerProps> = ({ value, onChange }) => {
           <div className='title'></div>
           <div className='btn-group'>
             <div className="left">
-              <button >Prev Year</button>
+              <button onClick={handlePrevYearClick}>Prev Year</button>
               <button onClick={handlePrevMonthClick}>Prev Month</button>
             </div>
             <div className="right">
               <button onClick={handleNextMonthClick}>Next Month</button>
-              <button>Next Year</button>
+              <button onClick={handleNextYearClick}>Next Year</button>
             </div>
           </div>
         </div>
         {/* CALENDAR BODY */}
-
         <div className="calendar-body">
           <table>
-
             <thead>
               <tr>
                 {Dayname.map(day => (
@@ -97,11 +113,9 @@ export const DatePicker: React.FC<DatePickerProps> = ({ value, onChange }) => {
                 ))}
               </tr>
             </thead>
-
             <tbody>
               {renderDays}
             </tbody>
-
           </table>
         </div>
 

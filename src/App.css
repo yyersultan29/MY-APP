@@ -46,3 +46,9 @@ td {
 .text_grey {
   color: #999;
 }
+
+.text_red_rounded {
+  background: green;
+  border-radius: 60px;
+  color: #fff;
+}

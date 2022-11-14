@@ -1,7 +1,6 @@
 import React from 'react';
 import './App.css';
 import { DatePicker } from './components/DatePicker/DatePicker';
-import { Dayname, month } from './utils/getMonth';
 
 
 function App() {
