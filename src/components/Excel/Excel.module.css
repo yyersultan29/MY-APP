@@ -1,0 +1,47 @@
+.Excel {
+    padding: 50px;
+}
+.addSearch{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 50px;
+}
+
+.add{
+    padding: 10px;
+    font-size: 20px;
+    font-weight: bold;
+    border-radius: 10px;
+    border: 0;
+    background-color: #6f001b;
+    color: #fff;
+    transition: all .2s ease ;
+}
+.add:hover{
+    transform: scale(1.1);
+}
+.search {
+    padding: 10px;
+}
+.Table {
+    width: 100%;
+    font-family: Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+.Table td, .Table th {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+.btnGroup {
+    display: flex;
+    justify-content: center;
+}
+.btnGroup>button{
+    margin-right: 5px;
+}
+.btnGroup>button:last-child{
+    margin-right: 0;
+}

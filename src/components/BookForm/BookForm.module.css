@@ -1,0 +1,28 @@
+.Container {
+    padding: 40px;
+    display: flex;
+    justify-content: center;
+}
+.Form > button{ 
+    padding: 10px;
+    background-color:#6f001b;
+    color: #fff;
+    border: 0;
+    border-radius: 5px;
+    transition: all .1s ease;
+}
+
+.Form > button:hover{
+    background-color: #8d0325;
+}
+
+.FormItem {
+    margin-bottom: 20px;
+}
+.FormItem > div{
+    color: #999;
+    margin-bottom: 10px;
+}
+.FormItem > input {
+    padding: 10px;
+} 
