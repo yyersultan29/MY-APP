@@ -11,11 +11,9 @@ export const DatePicker: React.FC<DatePickerProps> = ({ value, onChange }) => {
   const year = date.getFullYear();
   const daysInMonth = new Date(date.getFullYear(), date.getMonth() + 1, 0).getDate();
 
-
   let firstDay = new Date(date.getFullYear(), date.getMonth(), 1).getDay();
   firstDay = firstDay === 0 ? 7 : firstDay;
   let prevMonthLastDay = new Date(date.getFullYear(), date.getMonth(), 0).getDate();
-
 
   const handlePrevMonthClick = (): void => {
     if (date.getMonth() - 1 < 0) {
@@ -37,6 +35,7 @@ export const DatePicker: React.FC<DatePickerProps> = ({ value, onChange }) => {
   const handlePrevYearClick = (): void => {
     onChange(new Date(year - 1, 0, 1));
   }
+
   const isEqualDates = (testDate: Date): boolean => {
     const currDate = new Date();
     return testDate.getDate() === currDate.getDate()
@@ -52,7 +51,6 @@ export const DatePicker: React.FC<DatePickerProps> = ({ value, onChange }) => {
     let nextMonthStartDay = 1;
     const arr = [];
     let startDay = 1;
-
     for (let i = 0; i < 6; i++) {
       let sub = [];
       // week days from 1 to 7
@@ -75,14 +73,11 @@ export const DatePicker: React.FC<DatePickerProps> = ({ value, onChange }) => {
           sub.push(<td key={`${i}_${j}`} className='text_grey'>{nextMonthStartDay}</td>);
           nextMonthStartDay++;
         }
-
       }
       arr.push(<tr key={i}>{sub}</tr>)
     }
     return arr;
   }, [date]);
-
-
 
   return (
     <div className="App">
@@ -103,6 +98,7 @@ export const DatePicker: React.FC<DatePickerProps> = ({ value, onChange }) => {
             </div>
           </div>
         </div>
+
         {/* CALENDAR BODY */}
         <div className="calendar-body">
           <table>
@@ -118,7 +114,6 @@ export const DatePicker: React.FC<DatePickerProps> = ({ value, onChange }) => {
             </tbody>
           </table>
         </div>
-
       </div>
     </div>
   );

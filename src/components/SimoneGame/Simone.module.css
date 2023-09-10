@@ -1,0 +1,44 @@
+.container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  width: 410px;
+  height: 420px;
+}
+
+.button {
+  width: 200px;
+  height: 200px;
+  padding: 15px 25px;
+  font-size: 24px;
+  text-align: center;
+  cursor: pointer;
+  outline: none;
+  color: #fff;
+  border: none;
+  border-radius: 15px;
+  /* box-shadow: 0 9px #999; */
+}
+
+.button:hover {
+  opacity: 0.5;
+}
+
+.button:active {
+  /* box-shadow: 0 5px #666; */
+  transform: translateY(4px);
+}
+
+@keyframes moveBtn {
+  from {
+    transform: translateY(0px);
+  }
+  to {
+    transform: translateY(4px);
+  }
+}
+
+.animationClass {
+  opacity: 0.5;
+  transform: translateY(4px);
+}

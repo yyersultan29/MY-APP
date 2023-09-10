@@ -1,24 +1,23 @@
 import { FC } from "react";
 
-import cn from "classnames";
-
-import styles from './Modal.module.css';
 import { ModalProps } from "./Modal.Props";
+import { Portal } from "../Portal/Portal";
+import { useMount } from "./hook/useMount";
+import { Layout } from "./layout/Layout";
 
-export const Modal:FC<ModalProps> = ({setIsShow,isShow,children}) => {
-    const closeModal = () => setIsShow(false)
+export const Modal: FC<ModalProps> = ({ opened, onClose, children }) => {
+
+    const { mounted } = useMount({ opened });
+
+    if (!mounted) {
+        return null;
+    }
+
     return (
-        <div className={cn(styles.modal, {
-            [styles.open]: isShow,
-            [styles.close]: !isShow
-        })}>
-            <div className={styles.modal__area} onClick={closeModal} />
-
-            <div className={styles.modal__body}>
-                <div className={styles.modal__content}>
-                    {children}
-                </div>
-            </div>
-        </div>
+        <Portal>
+            <Layout opened={opened} onClose={onClose} >
+                {children}
+            </Layout>
+        </Portal>
     )
 }
