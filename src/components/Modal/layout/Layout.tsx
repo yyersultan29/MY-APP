@@ -21,7 +21,7 @@ const contentAnimation = {
   exitActive: animationStyles.contentExitActive,
 };
 
-export const Layout: FC<LayoutProps> = ({ opened, children, onClose }) => {
+export const Layout: FC<LayoutProps> = ({ opened, children, onClose, ...restProps }) => {
   const overlayRef = useRef(null);
   const contentRef = useRef(null);
 
@@ -32,7 +32,7 @@ export const Layout: FC<LayoutProps> = ({ opened, children, onClose }) => {
   }, [opened]);
 
   return (
-    <div className={styles.container}>
+    <div className={styles.container} >
 
       <CSSTransition
         in={animationIn}
@@ -53,7 +53,7 @@ export const Layout: FC<LayoutProps> = ({ opened, children, onClose }) => {
         unmountOnExit
         classNames={contentAnimation}
       >
-        <div ref={contentRef} className={styles.content} >
+        <div ref={contentRef} className={styles.content} {...restProps} >
           {children}
         </div>
       </CSSTransition>

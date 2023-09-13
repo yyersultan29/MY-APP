@@ -5,7 +5,7 @@ import { Portal } from "../Portal/Portal";
 import { useMount } from "./hook/useMount";
 import { Layout } from "./layout/Layout";
 
-export const Modal: FC<ModalProps> = ({ opened, onClose, children }) => {
+export const Modal: FC<ModalProps> = ({ opened, onClose, children, ...restProps }) => {
 
     const { mounted } = useMount({ opened });
 
@@ -15,7 +15,7 @@ export const Modal: FC<ModalProps> = ({ opened, onClose, children }) => {
 
     return (
         <Portal>
-            <Layout opened={opened} onClose={onClose} >
+            <Layout opened={opened} onClose={onClose} {...restProps}>
                 {children}
             </Layout>
         </Portal>

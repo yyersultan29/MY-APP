@@ -10,6 +10,8 @@ import { FailModal } from './components/FailModal';
 
 export const SimoneGame = () => {
 
+  const [level, setLevel] = useState(0);
+
   const [order, setOrder] = useState<Order>(Order.BOT);
 
   const [bot, setBot] = useState<string[]>([getRandomColor(), getRandomColor(), getRandomColor()]);
@@ -32,12 +34,24 @@ export const SimoneGame = () => {
           setUser([]);
           setIndex(0);
           setBot(prev => [...prev, getRandomColor()]);
+          setLevel(prev => prev + 1);
         }
       } else {
         setOpenFailModal(true);
       }
-
     }
+  }
+
+  const handleCloseFailModal = () => {
+    setOpenFailModal(false);
+    restartGame();
+    setLevel(0);
+  }
+
+  const restartGame = async () => {
+    await sleep(1000);
+    setBot([getRandomColor()]);
+    setUser([]);
   }
 
 
@@ -56,46 +70,59 @@ export const SimoneGame = () => {
 
     }
     renderBotMoves();
-    // setOrder("user");
 
   }, [bot]);
 
 
 
   return (
-    <div>
+    <div style={{ display: "flex", gap: "50px" }}>
 
-      <FailModal opened={openFailModal} onClose={() => setOpenFailModal(false)} />
+      <FailModal opened={openFailModal} onClose={handleCloseFailModal} />
 
-      <h4>Order: {order}</h4>
+      <div>
 
-      <div className={style.container}>
+        <h4>Order: {order}</h4>
 
-        <button
-          style={{ background: "green", }}
-          onClick={() => handleClickColor("green")}
-          className={cn(style.button, botMove === "green" && style.animationClass)}
-        />
+        <div className={style.container}>
 
-        <button
-          style={{ background: "red", }}
-          onClick={() => handleClickColor("red")}
-          className={cn(style.button, botMove === "red" && style.animationClass)}
-        />
+          <button
+            style={{ background: "green", }}
+            onClick={() => handleClickColor("green")}
+            className={cn(style.button, botMove === "green" && style.animationClass)}
+          />
 
-        <button
-          style={{ background: "yellow", }}
-          onClick={() => handleClickColor("yellow")}
-          className={cn(style.button, botMove === "yellow" && style.animationClass)}
-        />
+          <button
+            style={{ background: "red", }}
+            onClick={() => handleClickColor("red")}
+            className={cn(style.button, botMove === "red" && style.animationClass)}
+          />
 
-        <button
-          style={{ background: "blue", }}
-          onClick={() => handleClickColor("blue")}
-          className={cn(style.button, botMove === "blue" && style.animationClass)}
-        />
+          <button
+            style={{ background: "yellow", }}
+            onClick={() => handleClickColor("yellow")}
+            className={cn(style.button, botMove === "yellow" && style.animationClass)}
+          />
 
+          <button
+            style={{ background: "blue", }}
+            onClick={() => handleClickColor("blue")}
+            className={cn(style.button, botMove === "blue" && style.animationClass)}
+          />
+
+        </div>
       </div>
+
+      {/* game level */}
+
+      <div>
+        {Array(level).fill(0).map((_, index) => (
+          <div key={index}>
+            {index + 1} ✅
+          </div>
+        ))}
+      </div>
+
 
     </div>
   )
