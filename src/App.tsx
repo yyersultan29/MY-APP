@@ -1,16 +1,11 @@
-import { useState } from 'react';
-import './App.css';
-import { SimoneGame } from './components/SimoneGame/SimoneGame';
-
+import { TypeRacer } from "./components/TypeRacer/TypeRacer"
 
 function App() {
 
-
-  return (
-    <div className='App'>
-      <SimoneGame />
-    </div>
-  )
+  return <div>
+    <TypeRacer />
+  </div>
 }
 
-export default App;
+
+export default App
