@@ -49,3 +49,8 @@
 .btn {
   padding: 5px;
 }
+.wall {
+  width: 700px;
+  border-bottom: 2px dashed #333;
+  margin-bottom: 50px;
+}
