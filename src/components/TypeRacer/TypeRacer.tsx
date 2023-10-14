@@ -1,4 +1,4 @@
-import { Fragment, useCallback, useEffect, useState } from "react";
+import { Fragment, useCallback, useEffect, useLayoutEffect, useState } from "react";
 import { words } from "./data"
 
 import "./TypeRacer.css";
@@ -6,9 +6,9 @@ import { textMapper } from "./mapper";
 import { Alert } from "./Alert";
 import carSrc from "./blueCar.png";
 
-let currentIndex = -1;
-export const TypeRacer = () => {
 
+export const TypeRacer = () => {
+  const [currentIndex, setCurrentIndex] = useState(-1);
   const [open, setOpen] = useState(false);
 
   const [correct, setCorrect] = useState(0);
@@ -19,10 +19,24 @@ export const TypeRacer = () => {
     setCorrect(0);
     setLettersList(() => textMapper(words));
     setOpen(false);
-    currentIndex = -1;
+    setCurrentIndex(-1);
   }, [])
 
   const handleClickKey = (e: KeyboardEvent) => {
+    console.log(currentIndex);
+
+    if (e.key === "Backspace") {
+
+      setCurrentIndex(currentIndex => {
+        setLettersList(prev => {
+          let copy = [...prev];
+          copy[currentIndex + 1] = { className: "", letter: copy[currentIndex + 1].letter }
+          return copy;
+        });
+        return currentIndex - 1;
+      });
+      return;
+    }
 
     if (e.key.length > 1) return;
 
@@ -31,40 +45,40 @@ export const TypeRacer = () => {
       return;
     }
 
-    setLettersList(prev => {
+    setCurrentIndex(currentIndex => {
+      setLettersList(prev => {
 
-      let copy = [...prev];
-      console.log(currentIndex);
+        let copy = [...prev];
 
-      if (e.key === copy[currentIndex].letter) {
-        copy[currentIndex] = {
-          className: "correct",
-          letter: copy[currentIndex].letter
-        };
-        setCorrect(prev => ++prev);
+        if (e.key === copy[currentIndex]?.letter) {
+          copy[currentIndex] = {
+            className: "correct",
+            letter: copy[currentIndex].letter
+          };
+          setCorrect(prev => prev + 1);
 
-      } else {
-        copy[currentIndex] = {
-          className: copy[currentIndex].letter === " " ?
-            "wrong-space" :
-            "wrong",
-          letter: copy[currentIndex].letter
-        };
-      }
+        } else {
+          copy[currentIndex] = {
+            className: copy[currentIndex]?.letter === " " ?
+              "wrong-space" :
+              "wrong",
+            letter: copy[currentIndex]?.letter
+          };
+        }
 
-      return copy;
-    });
-
-    ++currentIndex
+        return copy;
+      });
+      return currentIndex + 1;
+    })
 
   }
 
   useEffect(() => {
 
-    window.addEventListener("keyup", handleClickKey);
+    window.addEventListener("keyup", (e) => handleClickKey(e));
 
     return () => {
-      window.removeEventListener("keyup", handleClickKey);
+      window.removeEventListener("keyup", (e) => handleClickKey(e));
     }
   }, []);
 
