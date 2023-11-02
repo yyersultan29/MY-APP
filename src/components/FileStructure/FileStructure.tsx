@@ -8,12 +8,13 @@ import ArticleIcon from '@mui/icons-material/Article';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import { FileType, IFile } from "./types";
 
 export const FileStructure = () => {
 
-  const [treeData, setTreeData] = useState(initialData);
+  const [treeData, setTreeData] = useState<IFile[]>(initialData);
 
-  const handleEdit = (fileName: string, type: "folder" | "file") => {
+  const handleEdit = (fileName: string, type: FileType) => {
 
     const text = window.prompt();
     const copy = [...treeData];
@@ -34,7 +35,7 @@ export const FileStructure = () => {
     setTreeData(helper(copy));
   }
 
-  const handleDelete = (fileName: string, type: "folder" | "file") => {
+  const handleDelete = (fileName: string, type: FileType) => {
 
     const copy = [...treeData];
 
@@ -62,10 +63,24 @@ export const FileStructure = () => {
           <Box width="100%">
             <Accordion sx={{ border: "none", outline: "none" }}>
               {/* Parent */}
-              <AccordionSummary sx={{ border: 0, outline: "none" }} expandIcon={data.type === "folder" ? <ExpandMoreIcon /> : null}>
-                <Box width={"100%"} display="flex" justifyContent="space-between" alignSelf="end" p="5px" sx={{ ":hover": { backgroundColor: "silver" } }}>
+              <AccordionSummary
+                sx={{ border: 0, outline: "none" }}
+                expandIcon={data.type === "folder" ? <ExpandMoreIcon /> : null}
+              >
+                <Box
+                  p="5px"
+                  width="100%"
+                  display="flex"
+                  alignSelf="end"
+                  justifyContent="space-between"
+                  sx={{ ":hover": { backgroundColor: "silver" } }}
+                >
                   <Box width="100%" display="flex">
-                    {data.type === "folder" ? <FolderIcon color="warning" /> : <ArticleIcon color="action" />}
+
+                    {data.type === "folder" ?
+                      <FolderIcon color="warning" /> :
+                      <ArticleIcon color="action" />}
+
                     <Typography>{data.name} </Typography>
                   </Box>
                   <Box display="flex" gap="7px">
@@ -83,6 +98,7 @@ export const FileStructure = () => {
                       onClick={() => handleDelete(data.name, data.type)}
                     />
                   </Box>
+
                 </Box>
               </AccordionSummary>
 

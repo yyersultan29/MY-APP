@@ -1,4 +1,6 @@
-export const initialData = [
+import { IFile } from "./types";
+
+export const initialData: IFile[] = [
   {
     name: "Dir 1",
     type: "folder",
