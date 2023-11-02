@@ -1,9 +1,9 @@
-import { TypeRacer } from "./components/TypeRacer/TypeRacer"
+import { FileStructure } from "./components/FileStructure/FileStructure"
 
 function App() {
 
   return <div>
-    <TypeRacer />
+    <FileStructure />
   </div>
 }
 
