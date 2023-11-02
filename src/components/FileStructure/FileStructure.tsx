@@ -3,12 +3,12 @@ import { useState } from "react"
 import { Accordion, AccordionDetails, AccordionSummary, Box, Typography } from "@mui/material";
 
 import { initialData } from "./constants"
+import { FileType, IFile } from "./types";
 import FolderIcon from '@mui/icons-material/Folder';
 import ArticleIcon from '@mui/icons-material/Article';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import { FileType, IFile } from "./types";
 
 export const FileStructure = () => {
 
@@ -19,11 +19,11 @@ export const FileStructure = () => {
     const text = window.prompt();
     const copy = [...treeData];
 
-    const helper = (treeData: any[]) => {
+    const helper = (treeData: IFile[]) => {
       for (let i = 0; i < treeData.length; i++) {
         const data = treeData[i];
         if (data.name === fileName && data.type === type) {
-          treeData[i] = { ...treeData[i], name: text }
+          treeData[i] = { ...treeData[i], name: text ?? "" }
           break;
         } else {
           data.children && helper(data.children);
@@ -39,7 +39,7 @@ export const FileStructure = () => {
 
     const copy = [...treeData];
 
-    const helper = (treeData: any[]) => {
+    const helper = (treeData: IFile[]) => {
       for (let i = 0; i < treeData.length; i++) {
         const data = treeData[i];
         if (data.name === fileName && data.type === type) {
@@ -56,7 +56,7 @@ export const FileStructure = () => {
 
   }
 
-  const renderData = (treeData: any[]) => {
+  const renderData = (treeData: IFile[]) => {
     return treeData.map(data => {
       return (
         <Box key={data.name} width={"100%"}>
